@@ -3,7 +3,8 @@ body {
   font-family: sans-serif;
   background-color: white;
   color: #555;
-  overflow-y: hidden;
+  margin: 0px;
+  padding: 0px;
 }
 ::-webkit-scrollbar {
 width: 7px;

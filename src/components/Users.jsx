@@ -1,26 +1,34 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import UserItem from './UserItem';
 
 import '../css/App.css';
 
 class Users extends Component {
   render() {
-    console.log(this.props.users);
     return (
       <div className="users">
         <div className='users-header'>
-          <h4><b>USERS</b></h4>
+          <h4>
+            <div
+              style={{float: 'left', cursor: 'pointer'}}
+              className="glyphicon glyphicon-menu-right"
+              onClick={this.props.toggleUsers}
+            >
+            </div>
+            USERS
+          </h4>
         </div>
         <div className='user-list'>
           {
+            this.props.users.length > 0 ?
             this.props.users.map((user, key) => {
               return (
-                <div key={key} className='userItem'>
-                  <div><b>{user.email}</b></div>
-                  <div><em>{user.userName}</em></div>
-                </div>
+                <UserItem key={key} user={user} />
               );
             })
+            :
+            <div className='loader'></div>
           }
           </div>
       </div>

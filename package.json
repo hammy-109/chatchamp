@@ -5,7 +5,9 @@
   "dependencies": {
     "firebase": "^3.9.0",
     "loaders.css": "^0.1.2",
+    "prop-types": "^15.5.10",
     "react": "^15.5.4",
+    "react-bootstrap": "^0.31.0",
     "react-dom": "^15.5.4",
     "react-loaders": "^2.5.0",
     "react-redux": "^5.0.4",
