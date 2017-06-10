@@ -4,7 +4,7 @@ import { allInbox } from '../firebase';
 
 import '../css/App.css';
 
-class Message extends Component {
+class InputMessage extends Component {
   constructor (props) {
     super(props);
     this.state = {
@@ -12,31 +12,38 @@ class Message extends Component {
     };
   }
   sendMessage = () => {
-    console.log(this.props);
-    allInbox.child(this.props.selectedUser.uniqueKey).child('inbox').child(this.props.user.uniqueKey).child('messages').push({
+    allInbox.child(this.props.selectedUser.uniqueKey)
+    .child('inbox').child(this.props.user.uniqueKey)
+    .child('messages').push({
       message: this.state.message,
       send: 1,
       time: firebase.database.ServerValue.TIMESTAMP
     });
-    allInbox.child(this.props.user.uniqueKey).child('inbox').child(this.props.selectedUser.uniqueKey).child('messages').push({
+
+    allInbox.child(this.props.selectedUser.uniqueKey)
+    .child('inbox').child(this.props.user.uniqueKey)
+    .child('selectedUser').set(this.props.user);
+
+    allInbox.child(this.props.user.uniqueKey)
+    .child('inbox').child(this.props.selectedUser.uniqueKey)
+    .child('messages').push({
       message: this.state.message,
       send: 0,
       time: firebase.database.ServerValue.TIMESTAMP
     });
-    // console.log(users.child('-KlmYpI32j3WYIUkWO7e').val());
-    // console.log(users.child(this.props.selectedUser.uniqueKey));
-    // users.on("child_added", function(snapshot, this.props.selectedUser.uniqueKey) {
-    //   var newPost = snapshot.val();
-    //   console.log("Author: " + newPost.author);
-    //   console.log("Title: " + newPost.title);
-    //   console.log("Previous Post ID: " + prevChildKey);
-    // });
+
+    allInbox.child(this.props.user.uniqueKey)
+    .child('inbox').child(this.props.selectedUser.uniqueKey)
+    .child('selectedUser').set(this.props.selectedUser);
+    this.props.loadAgain();
+    this.refs.messageText.value = '';
   }
   render() {
     return (
       <div className='message-input'>
         <input
           type="text"
+          ref="messageText"
           rows="4"
           cols="50"
           autoFocus
@@ -58,4 +65,4 @@ class Message extends Component {
     );
   }
 }
-export default Message;
+export default InputMessage;

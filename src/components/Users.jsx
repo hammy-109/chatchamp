@@ -5,6 +5,9 @@ import UserItem from './UserItem';
 import '../css/App.css';
 
 class Users extends Component {
+  // shouldComponentUpdate (nextProps, nextState) {
+  //   return this.props !== nextProps;
+  // }
   render() {
     return (
       <div className="users">

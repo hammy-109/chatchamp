@@ -1,13 +1,42 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { allInbox } from '../firebase';
 
-import Message from './Message';
+import InputMessage from './InputMessage';
+import MessagesItem from './MessagesItem';
 import '../css/App.css';
 
 class Messages extends Component {
+  constructor (props) {
+    super(props);
+    this.state = {
+      messages: undefined,
+      loadAgain: false,
+    }
+  }
 
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.selectedUser.uniqueKey && nextProps.user.uniqueKey) {
+      allInbox.child(nextProps.user.uniqueKey)
+      .child('inbox').child(nextProps.selectedUser.uniqueKey)
+      .child('messages').on('value', snap => {
+        let messages = [];
+        snap.forEach(item => {
+          const { message, send, time } = item.val();
+          messages.push ({
+            message,
+            send,
+            time,
+          });
+        });
+        this.setState({ messages: messages.length > 0 ? messages : '-' });
+      });
+    }
+  }
+  loadAgain = () => {
+    this.setState({loadAgain: !this.state.loadAgain});
+  }
   render() {
-    console.log(this.props.user);
     return (
       <div className="messages">
         <div className='message-header'>
@@ -40,13 +69,25 @@ class Messages extends Component {
           this.props.selectedUser.userName ?
           <div>
             <div className='message-body'>
-              <div className='message-body-messages'>
-                hii skjdbsjdbsjdbvjsbdjvbsjdbvsdsdjvsdjhsldhvsldhvsldkvhsldkvhslkdvhlskd hvlskd hvlkh
-              </div>
-
+              {
+                !this.state.messages ?
+                <div className='loader'></div> :
+                this.state.messages === '-' ?
+                <div className="no-inbox">
+                  <div><i className='glyphicon glyphicon-inbox'/></div>
+                  <b>NO MESSAGES</b>
+                </div> :
+                this.state.messages.map((message, key) => {
+                  return <MessagesItem key={key} messageObj={message}/>
+                })
+              }
             </div>
             <div className='message-footer'>
-              <Message selectedUser={this.props.selectedUser} user={this.props.user}/>
+              <InputMessage
+                selectedUser={this.props.selectedUser}
+                user={this.props.user}
+                loadAgain={this.loadAgain}
+              />
             </div>
           </div>
           :

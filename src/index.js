@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import { Router, Route } from 'react-router-dom';
 import { createBrowserHistory } from 'history'
-import { firebaseApp, users, allInbox } from './firebase';
+import { firebaseApp, users } from './firebase';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 
@@ -21,8 +21,8 @@ const store = createStore(reducer);
 firebaseApp.auth().onAuthStateChanged(user => {
   if (user) {
     const { email } = user;
-    let userList= [];
     users.on('value', snap => {
+      let userList= [];
       snap.forEach(user => {
         const { email, userName } = user.val();
         const uniqueKey = user.key;
