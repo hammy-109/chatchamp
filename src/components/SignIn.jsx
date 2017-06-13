@@ -26,21 +26,25 @@ class SignIn extends Component {
   }
   render () {
     return (
-      <div className='form-inline col-sm-4' style={{margin: '5%'}}>
+      <div className='' style={{padding: '1rem'}}>
         <div className='form-group'>
+          <div className="chat-icon " style={{marginTop: '0px'}}>
+            <div className="icon glyphicon glyphicon-send"></div>
+            <div className="chat-icon-text">C<span>hat Cham</span>p</div>
+          </div>
           <h2>Sign In</h2>
           <input
             style={{width: '100%', marginTop: '10px'}}
             className='form-control'
             type='text'
-            placeholder='email'
+            placeholder='Email'
             onChange={event => this.setState({email: event.target.value})}
           />
           <input
             style={{width: '100%', marginTop: '10px'}}
             className='form-control'
             type='password'
-            placeholder='password'
+            placeholder='Password'
             onChange={event => this.setState({password: event.target.value})}
           />
           <button
@@ -50,7 +54,7 @@ class SignIn extends Component {
             Sign In
           </button>
           <div style={{ marginTop: '10px'}}>{this.state.error.message}</div>
-          <div><Link to={'/signup'}>Sign up</Link></div>
+          <div><Link to={'/chatChamp/signup'}>Sign up</Link></div>
         </div>
       </div>
     );

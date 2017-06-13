@@ -74,7 +74,7 @@ class Messages extends Component {
                 <div className='loader'></div> :
                 this.state.messages === '-' ?
                 <div className="no-inbox">
-                  <div><i className='glyphicon glyphicon-inbox'/></div>
+                  <div><i className='glyphicon glyphicon-envelope'/></div>
                   <b>NO MESSAGES</b>
                 </div> :
                 this.state.messages.map((message, key) => {

@@ -28,8 +28,12 @@ class SignUp extends Component {
   }
   render () {
     return (
-      <div className='form-inline col-sm-4' style={{margin: '5%'}}>
+      <div className='' style={{padding: '1rem'}}>
         <div className='form-group'>
+          <div className="chat-icon " style={{marginTop: '0px'}}>
+            <div className="icon glyphicon glyphicon-send"></div>
+            <div className="chat-icon-text">C<span>hat Cham</span>p</div>
+          </div>
         <h2>Sign Up</h2>
           <input
             style={{width: '100%', marginTop: '10px'}}
@@ -59,7 +63,7 @@ class SignUp extends Component {
             Sign Up
           </button>
           <div style={{ marginTop: '10px'}}>{this.state.error.message}</div>
-          <div><Link to={'/signin'}>Sign In</Link></div>
+          <div><Link to={'/chatChamp/signin'}>Sign In</Link></div>
         </div>
       </div>
     );

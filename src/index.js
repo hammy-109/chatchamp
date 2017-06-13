@@ -47,7 +47,7 @@ ReactDOM.render(
       <div>
         <Route path='/chatChamp/app' component={App} />
         <Route path='/chatChamp/signin' component={SignIn} />
-        <Route path='/signup' component={SignUp} />
+        <Route path='/chatChamp/signup' component={SignUp} />
       </div>
     </Router>
   </Provider>,

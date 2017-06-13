@@ -19,14 +19,11 @@ class Header extends Component {
             <div className="col-sm-4">
               <User user={this.props.user}/>
             </div>
-            <div className="col-sm-4">
-              <div className="app-head">
-                <div className=" glyphicon glyphicon-send"></div>&nbsp;
-                Chat Champ
-              </div>
+            <div  className="col-sm-4">
             </div>
             <div className="col-sm-4">
               <DropdownButton
+                style={{float: 'right'}}
                 title=""
                 id="userMenu"
                 pullRight={true}
@@ -88,3 +85,12 @@ function mapStateToProps (state) {
   }
 }
 export default connect(mapStateToProps, null)(Header);
+
+
+
+// <div className="col-sm-4">
+//   <div className="app-head">
+//     <div className=" glyphicon glyphicon-send"></div>&nbsp;
+//     Chat Champ
+//   </div>
+// </div>

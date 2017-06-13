@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import moment from 'moment';
 import '../css/App.css';
 
 class MessagesItem extends Component {
@@ -8,10 +9,17 @@ class MessagesItem extends Component {
     return (
       <div
         className={
-          this.props.messageObj.send === 0 ? 'message-body-messages send' : 'message-body-messages receive'
+          this.props.messageObj.send === 0 ? 'send' : 'receive'
         }
       >
+        <div
+          className='message-body-message-text' id='send'
+        >
         {this.props.messageObj.message}
+        </div>
+        <div >
+          {moment(this.props.messageObj.time).format('LLLL')}
+        </div>
       </div>
     );
   }

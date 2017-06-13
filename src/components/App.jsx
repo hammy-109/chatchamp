@@ -49,11 +49,6 @@ class App extends Component {
   render() {
     return (
       <div className="App">
-        <Header
-          toggleInbox={this.toggleInbox}
-          toggleUsers={this.toggleUsers}
-          toggleProfile={this.toggleProfile}
-        />
         <div className="App-body">
           <div className='row'>
             <div
@@ -63,6 +58,11 @@ class App extends Component {
                 'hide-display'
               }
             >
+              <Header
+                toggleInbox={this.toggleInbox}
+                toggleUsers={this.toggleUsers}
+                toggleProfile={this.toggleProfile}
+              />
               <Inbox
                 toggleInbox={this.toggleInbox}
                 inbox={this.state.inbox}

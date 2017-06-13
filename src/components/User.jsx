@@ -7,7 +7,7 @@ class User extends Component {
     return (
       <span className="user-name">
         <i style={{fontSize: '16px'}} className="glyphicon glyphicon-user" />&nbsp;&nbsp;
-        <b><em>{this.props.user.userName}</em></b>
+        {this.props.user.userName}
       </span>
     );
   }

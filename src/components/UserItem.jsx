@@ -13,7 +13,7 @@ class userItem extends Component {
     return (
       <div className="row userItem" onClick={this.userSelected}>
         <div className="col-sm-3" style={{padding: '0rem', textAlign: 'center'  }}>
-          <i style={{fontSize: '40px'}} className="glyphicon glyphicon-user" />
+          <i style={{fontSize: '40px', color: '#ddd'}} className="glyphicon glyphicon-user" />
         </div>
         <div className="col-sm-8" >
           <div><b>{this.props.user.email}</b></div>

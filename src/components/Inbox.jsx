@@ -6,35 +6,60 @@ import '../css/App.css';
 
 class Inbox extends Component {
 
+  constructor (props) {
+    super(props);
+    this.state = {
+      inbox: [],
+      filteredInbox: [],
+    }
+  }
+  componentWillReceiveProps (nextProps) {
+    this.setState({ inbox: nextProps.inbox });
+  }
+  searchInbox = (e) => {
+    const findText = e.target.value;
+    if (findText !== '') {
+      const filteredInbox = this.state.inbox.filter( inbox => {
+        return inbox.selectedUser.userName.includes(findText)
+      });
+      this.setState({ filteredInbox });
+    } else {
+      this.setState({ filteredInbox: [] });
+    }
+  }
   render() {
-    console.log(this.props);
     return (
       <div>
-        <div className='inbox-header'>
-          <h4>
-            INBOX
-            <div
-              style={{float: 'right', cursor: 'pointer'}}
-              className="glyphicon glyphicon-menu-left"
-              onClick={this.props.toggleInbox}
-            >
-            </div>
-          </h4>
+        <div className='inbox-search'>
+          <div className="input-group input-group-sm">
+            <span className="input-group-addon" id="sizing-addon3"><i className='glyphicon glyphicon-search' /></span>
+            <input
+            type="text"
+            className="form-control"
+            placeholder="Search inbox.."
+            aria-describedby="sizing-addon3"
+            onChange={this.searchInbox}
+            />
+          </div>
         </div>
         <div className="inbox-body">
           {
-            this.props.inbox === 0 ?
+            this.state.inbox === 0 ?
             <div className='loader'></div> :
             <div>
               {
-                !this.props.inbox ?
+                !this.state.inbox ?
                 <div className='loader'></div> :
-                this.props.inbox === '-' ?
+                this.state.inbox === '-' ?
                 <div className="no-inbox">
                   <div><i className='glyphicon glyphicon-inbox'/></div>
                   <b>NO INBOX</b>
                 </div> :
-                this.props.inbox.map((item, key) =>
+                this.state.inbox.length > 0 && this.state.filteredInbox.length === 0 ?
+                this.state.inbox.map((item, key) =>
+                  <InboxItem key={key} inbox={item}/>
+                ) :
+                this.state.filteredInbox.map((item, key) =>
                   <InboxItem key={key} inbox={item}/>
                 )
               }
