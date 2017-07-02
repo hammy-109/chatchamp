@@ -10,3 +10,4 @@ const config = {
 export const firebaseApp = firebase.initializeApp(config);
 export const users = firebase.database().ref('users');
 export const allInbox = firebase.database().ref('allInbox');
+export const images = firebase.storage().ref('images');

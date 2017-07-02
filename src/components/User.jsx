@@ -1,13 +1,23 @@
 import React, { Component } from 'react';
+
 import '../css/App.css';
 
 class User extends Component {
-
+  constructor (props) {
+    super(props);
+    this.state = {
+      updateTime: true
+    }
+  }
+  componentWillReceiveProps (nextProps) {
+    if (nextProps.user.uniqueKey && this.state.updateTime) {
+      this.props.updateTime(nextProps.user.uniqueKey);
+      this.setState({updateTime: false});
+    }
+  }
   render() {
     return (
-      <span className="user-name">
-        <i style={{fontSize: '16px'}} className="glyphicon glyphicon-user" />&nbsp;&nbsp;
-        {this.props.user.userName}
+      <span>
       </span>
     );
   }

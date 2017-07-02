@@ -8,6 +8,7 @@ class SignIn extends Component {
   constructor(props) {
     super(props);
     this.state = {
+      signingIn: false,
       email: '',
       password: '',
       error: {
@@ -17,21 +18,22 @@ class SignIn extends Component {
   }
   signIn = () => {
     const { email, password } = this.state;
-
+    this.setState({ signingIn: true })
     firebaseApp.auth().signInWithEmailAndPassword(email, password)
       .catch(error => {
         console.log('error', error);
-        this.setState({error});
+        this.setState({error, signingIn: false});
       })
   }
   render () {
     return (
       <div className='' style={{padding: '1rem'}}>
+        <div className="chat-icon " style={{marginTop: '0px'}}>
+          <div className="icon glyphicon glyphicon-send"></div>
+          <div className="chat-icon-text">C<span>hat Cham</span>p</div>
+        </div>
+        <br />
         <div className='form-group'>
-          <div className="chat-icon " style={{marginTop: '0px'}}>
-            <div className="icon glyphicon glyphicon-send"></div>
-            <div className="chat-icon-text">C<span>hat Cham</span>p</div>
-          </div>
           <h2>Sign In</h2>
           <input
             style={{width: '100%', marginTop: '10px'}}
@@ -50,8 +52,17 @@ class SignIn extends Component {
           <button
             style={{width: '100%', marginTop: '10px'}}
             onClick={this.signIn}
-            className='btn btn-primary'>
-            Sign In
+            className={
+              this.state.signingIn ? 'btn btn-primary disabled' : 'btn btn-primary'
+            }>
+            {
+              this.state.signingIn ? 'Signing in' : 'Sign in'
+            }
+            &nbsp;&nbsp;
+            <i
+              className={
+                this.state.signingIn ? 'glyphicon glyphicon-log-in ' : ''
+              }/>
           </button>
           <div style={{ marginTop: '10px'}}>{this.state.error.message}</div>
           <div><Link to={'/chatChamp/signup'}>Sign up</Link></div>

@@ -1,11 +1,15 @@
 import React, { Component } from 'react';
-import { allInbox } from '../firebase';
+import { allInbox, users } from '../firebase';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import * as firebase from 'firebase';
 
 import Header from './Header';
 import Users from './Users';
 import Messages from './Messages';
 import Inbox from './Inbox';
+import { selectedUser } from '../actions/index';
+import Profile from './Profile';
 import '../css/App.css';
 
 class App extends Component {
@@ -15,36 +19,49 @@ class App extends Component {
     this.state = {
       inbox: undefined,
       user: {},
-      showInbox: true,
-      showUsers: true,
-      showProfile: false,
+      dirtyState: false,
     }
   }
   componentWillReceiveProps (nextProps, nextState) {
-    // this.setState({user: nextState.user});
     if (nextProps.user.uniqueKey) {
       allInbox.child(nextProps.user.uniqueKey).child('inbox').on('value', snap => {
         let inbox = [];
         snap.forEach(item => {
           const messages = item.val().messages;
           const selectedUser = item.val().selectedUser;
+          const time = item.val().time;
           inbox.push({
             messages,
-            selectedUser
+            selectedUser,
+            time,
           });
         });
-        this.setState({ inbox: inbox.length > 0 ? inbox : '-' });
+        inbox.sort(function(a,b) {
+            return b.time - a.time;
+        });
+        this.setState({ inbox: inbox.length > 0 ? inbox : [] });
+        if (nextProps.selectedUserObj.userName ===  null ) {
+          if (inbox.length > 0 && !this.state.dirtyState) {
+            this.props.selectedUser(inbox[0].selectedUser);
+          } else {
+            this.props.selectedUser(this.props.user);
+          }
+        }
       });
     }
   }
-  toggleInbox = () => {
-    this.setState({ showInbox: !this.state.showInbox});
+
+  updateTime = (key) => {
+    users.child(key).child('time').set(firebase.database.ServerValue.TIMESTAMP);
   }
-  toggleProfile = () => {
-    this.setState({ showProfile: !this.state.showProfile});
+  dirtyStateTrue = () => {
+    this.setState({dirtyState:  true});
   }
-  toggleUsers = () => {
-    this.setState({ showUsers: !this.state.showUsers});
+  showMyProfile = () => {
+  this.props.selectedUser(this.props.user);
+  }
+  componentDidMount () {
+    this.setState({ })
   }
   render() {
     return (
@@ -52,45 +69,30 @@ class App extends Component {
         <div className="App-body">
           <div className='row'>
             <div
-              className={
-                this.state.showInbox && this.state.showUsers ? 'col col-sm-3 nopadd' :
-                this.state.showInbox && !this.state.showUsers ? 'col col-sm-4 nopadd' :
-                'hide-display'
-              }
+              className='col col-sm-3 nopadd'
             >
-              <Header
-                toggleInbox={this.toggleInbox}
-                toggleUsers={this.toggleUsers}
-                toggleProfile={this.toggleProfile}
-              />
               <Inbox
-                toggleInbox={this.toggleInbox}
                 inbox={this.state.inbox}
               />
             </div>
             <div
-              className={
-                this.state.showInbox && this.state.showUsers ? 'col col-sm-6 border-lr' :
-                this.state.showInbox || this.state.showUsers ? 'col col-sm-8 border-lr' :
-                'col col-sm-12 border-lr'
-              }
+              className='col col-sm-6 border-lr'
             >
               <Messages
-                showInbox={this.state.showInbox}
-                showUsers={this.state.showUsers}
-                toggleInbox={this.toggleInbox}
-                toggleUsers={this.toggleUsers}
               />
             </div>
             <div
-              className={
-                this.state.showInbox && this.state.showUsers ? 'col col-sm-3 nopadd' :
-                !this.state.showInbox && this.state.showUsers ? 'col col-sm-4 nopadd' :
-                'hide-display'
-              }
+              className='col col-sm-3 nopadd'
             >
+              <Header
+                updateTime={this.updateTime}
+                showMyProfile={this.showMyProfile}
+              />
+              <Profile
+                user={this.props.user}
+                dirtyStateTrue={this.dirtyStateTrue}
+              />
               <Users
-                toggleUsers={this.toggleUsers}
               />
             </div>
           </div>
@@ -100,7 +102,11 @@ class App extends Component {
   }
 }
 function mapStateToProps(state) {
-  const { user, users } = state;
-  return { user, users };
+  const { user, users, selectedUser } = state;
+  const selectedUserObj = selectedUser;
+  return { user, users, selectedUserObj };
 }
-export default connect(mapStateToProps, null)(App);
+function mapDispatchToProps (dispatch) {
+  return bindActionCreators({selectedUser},dispatch)
+}
+export default connect(mapStateToProps, mapDispatchToProps)(App);

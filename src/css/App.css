@@ -14,7 +14,7 @@
 }
 .header {
   background-color: white ;
-  color: #01579b;
+  color: #0077e5;
   margin: 0;
   padding: 0.4rem;
 }
@@ -41,16 +41,16 @@
   border: none;
   font-size: 20px;
   border-radius: 50%;
-  color: #01579b;
+  color: #0077e5;
 }
 .dropdown button:hover {
   border: none;
   background-color: white;
 }
 .open>.dropdown-toggle.btn-default, .open>.dropdown-toggle.btn-default:focus, .open>.dropdown-toggle.btn-default:active {
-  background-color: #01579b ;
+  background-color: #0077e5 ;
   color: white;
-  border-color: #01579b ;
+  border-color: #0077e5 ;
   box-shadow: none;
 }
 .border-lr {
@@ -70,18 +70,28 @@
 }
 .users-header {
   padding: 0.5rem;
-  text-align: center;
-  color: #01579b ;
+  color: #0077e5 ;
   background-color: #eee;
   background-color: white;
 }
+.profile-header {
+  padding: 0.6rem;
+  text-align: center;
+  color: #0077e5 ;
+  background-color: #eee;
+  background-color: white;
+  /*box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 5px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;*/
+}
 .user-list {
   overflow-y: auto;
-  height: 700px;
+  height: 360px;
+}
+.user-list:hover::-webkit-scrollbar-thumb:vertical {
+  visibility: visible;
 }
 .user-search {
-  padding: 1rem;
-  border-bottom: 2px solid #ddd;
+  padding: 0.6rem;
+  border-bottom: 1px solid #ddd;
 }
 .user-search input{
   border: none;
@@ -95,18 +105,12 @@
   height: 670px;
 }
 .message-header {
-  padding: 0.5rem;
-  text-align: center;
+  /*padding: 0.3rem;*/
   border-bottom:  1px solid #e5e5e5;
-  color: #01579b ;
+  color: #0077e5 ;
   background-color: #eee;
   background-color: white;
   /*box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 5px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;*/
-
-}
-.message-smallheader {
-text-align: center;
-color: #888;
 
 }
 .message-input {
@@ -114,7 +118,7 @@ color: #888;
   display: inline-flex;
   width: 100%;
   border-top: 1px solid #e5e5e5;
-  box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 5px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;
+  /*box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 5px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;*/
 
 }
 .message-input input {
@@ -123,23 +127,27 @@ color: #888;
   outline: none;
   border-radius: 5px;
   max-height: 400px;
-  caret-color: #01579b ;
+  caret-color: #0077e5 ;
   caret-width: 5px;
   font-size: 16px;
 }
 .message-body {
-  padding: 0.5rem;
+  padding: 4rem;
   overflow-y: auto;
-  height: 450px;
+  height: 530px;
+}
+.message-body:hover::-webkit-scrollbar-thumb:vertical {
+  visibility: visible;
 }
 .message-body-message-text {
   padding: 0.7rem;
-  background-color: #e5e5e5;
+  background-color: #e5e4e4;
   color: #222;
-  border-radius: 15px 15px 15px 15px;
-  width: 500px;
+  border-radius: 50px;
+  max-width: 500px;
   margin-top: 10px;
   padding-left:20px;
+  padding-right:20px;
   word-wrap: break-word;
 }
 .send {
@@ -151,7 +159,9 @@ color: #888;
   color: black;
 }
 .send #send {
-  background-color: #3886c3;
+  min-width: 200px;
+  padding: 1.5rem;
+  background-color: #0077e5;
   color: white;
   text-align: left;
   font-size: 14px;
@@ -161,8 +171,10 @@ color: #888;
   color: black;
 }
 .receive #send {
-  border-radius: 15px 15px 15px 15px;
+  border-radius: 50px;
+  padding: 1.5rem;
   font-size: 14px;
+  min-width: 200px;
 }
 .receive {
   float: left;
@@ -175,21 +187,35 @@ color: #888;
 .inbox-header {
   padding: 0.5rem;
   text-align: center;
-  color: #01579b ;
+  color: #0077e5 ;
   background-color: #eee;
   background-color: white;
-  height: 100px;
+}
+.inbox-body {
+  height: 610px;
+}
+.inbox-body:hover::-webkit-scrollbar-thumb:vertical {
+  visibility: visible;
 }
 .no-inbox {
   margin-top: 100px;
   text-align: center;
   padding: 1rem;
   font-size: 24px;
-  color: #01579b;
+  color: #0077e5;
+}
+.no-inbox-match {
+  margin-top: 100px;
+  text-align: center;
+  padding: 1rem;
+  font-size: 24px;
+  color: #0077e5;
+  height: 300px;
 }
 .inbox-search {
   padding: 1rem;
-  border-bottom: 2px solid #ddd;
+  border-bottom: 1px solid #ddd;
+  /*box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 5px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;*/
 }
 .inbox-search input{
   border: none;
@@ -201,7 +227,7 @@ color: #888;
 }
 .loader {
     border: 8px solid white;
-    border-top: 7px solid #01579b;
+    border-top: 7px solid #0077e5;
     border-radius: 50%;
     width: 70px;
     height: 70px;
@@ -217,7 +243,7 @@ color: #888;
 }
 .chat-icon {
   text-align: center;
-  color: #01579b ;
+  color: #0077e5 ;
   margin-top: 100px
 
 }
@@ -225,7 +251,7 @@ color: #888;
   font-size: 50px;
 }
 .chat-icon-text span{
-  border-bottom: 3px solid #01579b ;
+  border-bottom: 3px solid #0077e5 ;
 }
 .icon {
   font-size: 100px;
@@ -233,7 +259,7 @@ color: #888;
 .form-group {
   /*width: 400px;*/
   background-color: white;
-  border-radius: 10px;
+  border-radius: 3px;
   box-shadow: rgba(0, 0, 0, 0.16) 0px 2px 5px 0px, rgba(0, 0, 0, 0.12) 0px 2px 10px 0px;
   padding: 2rem;
   width: 500px;
@@ -242,7 +268,7 @@ color: #888;
   display: block;
 }
 .form-group h2{
-  color: #01579b;
+  color: #0077e5;
 }
 .form-control {
   outline: none;
@@ -267,4 +293,39 @@ color: #888;
 }
 .row {
   margin: 0px;
+}
+.inputfile {
+	opacity: 0;
+	overflow: hidden;
+	position: absolute;
+	z-index: -1;
+}
+.inputfile + label {
+    width: 40px;
+    height: 40px;
+    font-size: 1.25em;
+    color: #0077e5;
+    display: inline-block;
+    border-radius: 100px;
+    padding: 1rem;
+    position: absolute;
+    top: 150px;
+    left: 200px;
+    background-color: #ddd;
+}
+
+.inputfile:focus + label,
+.inputfile + label:hover {
+    border-radius: 150px;
+    cursor: pointer;
+}
+.notification-count {
+  float: right;
+  background-color: orange;
+  border-radius: 50%;
+  padding: 0.5rem;
+  height: 30px;
+  width: 30px;
+  text-align: center;
+  color: white;
 }

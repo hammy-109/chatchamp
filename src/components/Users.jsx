@@ -10,6 +10,7 @@ class Users extends Component {
     this.state = {
       users: [],
       filteredUsers: [],
+      isMatchFlag: 0,
     };
   }
   componentWillReceiveProps (nextProps) {
@@ -22,31 +23,25 @@ class Users extends Component {
         return user.email.includes(findText) || user.userName.includes(findText)
       });
       this.setState({ filteredUsers });
+      if (filteredUsers.length === 0) {
+        this.setState({ filteredUsers: [], isMatchFlag: -1 })
+      } else {
+        this.setState({ filteredUsers, isMatchFlag: 1});
+      }
     } else {
-      this.setState({ filteredUsers: [] });
+      this.setState({ filteredUsers: [], isMatchFlag: 0 });
     }
   }
   render() {
     return (
       <div className="users">
-        <div className='users-header'>
-          <h4>
-            <div
-              style={{float: 'left', cursor: 'pointer'}}
-              className="glyphicon glyphicon-menu-right"
-              onClick={this.props.toggleUsers}
-            >
-            </div>
-            USERS
-          </h4>
-        </div>
         <div className='user-search'>
           <div className="input-group input-group-sm">
             <span className="input-group-addon" id="sizing-addon3"><i className='glyphicon glyphicon-search' /></span>
             <input
               type="text"
               className="form-control"
-              placeholder="Search users.."
+              placeholder="Find Friends..."
               aria-describedby="sizing-addon3"
               onChange={this.searchUsers}
             />
@@ -54,20 +49,32 @@ class Users extends Component {
         </div>
         <div className='user-list'>
           {
-            this.state.users.length > 0 && this.state.filteredUsers.length === 0 ?
+            this.state.users.length > 0
+            && this.state.filteredUsers.length === 0
+            && this.state.isMatchFlag === 0 ?
             this.state.users.map((user, key) => {
               return (
-                <UserItem key={key} user={user} />
+                <div key={key}>
+                  <UserItem user={user} />
+                </div>
               );
             })
             :
             this.state.filteredUsers.length > 0 ?
             this.state.filteredUsers.map((user, key) => {
               return (
-                <UserItem key={key} user={user} />
+                <div key={key}>
+                  <UserItem user={user} />
+                </div>
               );
             })
             :
+            this.state.filteredUsers.length === 0
+            && this.state.isMatchFlag === -1 ?
+            <div className="no-inbox-match">
+              <div><i className='glyphicon glyphicon-remove-sign'/></div>
+              <b>No Match</b>
+            </div> :
             <div className='loader'></div>
           }
           </div>

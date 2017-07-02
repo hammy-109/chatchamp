@@ -3,7 +3,9 @@ import { SELECTED_USER } from '../constants';
 let selectedUser = {
   email: null,
   userName: null,
-  key: null
+  key: null,
+  photoUrl: null,
+  time: null,
 }
 
 export default (state = selectedUser, action) => {

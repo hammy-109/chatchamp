@@ -4,6 +4,8 @@ let user = {
   email: null,
   userName: null,
   key: null,
+  photoUrl: null,
+  time: null,
 }
 
 export default (state = user, action) => {

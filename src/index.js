@@ -24,9 +24,9 @@ firebaseApp.auth().onAuthStateChanged(user => {
     users.on('value', snap => {
       let userList= [];
       snap.forEach(user => {
-        const { email, userName } = user.val();
+        const { email, userName, photoUrl, time } = user.val();
         const uniqueKey = user.key;
-        userList.push({email, userName, uniqueKey});
+        userList.push({email, userName, uniqueKey, photoUrl, time});
       });
       store.dispatch(usersList(userList));
       const loginUser = userList.filter(user => {

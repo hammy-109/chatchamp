@@ -1,27 +1,29 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { firebaseApp } from '../firebase';
+import { firebaseApp, users } from '../firebase';
+import * as firebase from 'firebase';
 import { DropdownButton, MenuItem } from 'react-bootstrap';
 
-import User from './User';
 import '../css/App.css';
 
 class Header extends Component {
   signOut = () => {
-    firebaseApp.auth().signOut();
+    console.log(this.props.user.uniqueKey);
+    users.child(this.props.user.uniqueKey).child('time').set(firebase.database.ServerValue.TIMESTAMP)
+    .then( success => {
+      console.log(this.props.user);
+      firebaseApp.auth().signOut();
+    })
   }
   render() {
     return (
       <div className="row header">
       {
         this.props.user ?
-          <div>
-            <div className="col-sm-4">
-              <User user={this.props.user}/>
-            </div>
-            <div  className="col-sm-4">
-            </div>
-            <div className="col-sm-4">
+          <div className='inbox-header'>
+            <h4>
+              <div className=" glyphicon glyphicon-send"></div>&nbsp;
+              Chat Champ
               <DropdownButton
                 style={{float: 'right'}}
                 title=""
@@ -31,21 +33,9 @@ class Header extends Component {
                 className="glyphicon glyphicon-option-vertical">
                 <MenuItem
                   id="Profile"
-                  onClick={this.props.toggleProfile}
+                  onClick={this.props.showMyProfile}
                 >
-                  Profile
-                </MenuItem>
-                <MenuItem
-                  id="hideinbox"
-                  onClick={this.props.toggleInbox}
-                >
-                  Toggle Inbox
-                </MenuItem>
-                <MenuItem
-                  id="hideinbox"
-                  onClick={this.props.toggleUsers}
-                >
-                  Toggle Users
+                  My Profile
                 </MenuItem>
                 <MenuItem
                   className="divider"
@@ -55,18 +45,12 @@ class Header extends Component {
                   id="signOut"
                   onClick={this.signOut}
                 >
-                  Log Out
+                  Log Out <i style={{ float: 'right'}}className='glyphicon glyphicon-log-out'/>
                 </MenuItem>
               </DropdownButton>
-            </div>
+            </h4>
           </div>
-        :
-          <div className="col-sm-12">
-            <div className="app-head">
-              <div className=" glyphicon glyphicon-send"></div>&nbsp;
-              Chat Champ
-            </div>
-          </div>
+        : null
       }
       </div>
     );
@@ -74,12 +58,6 @@ class Header extends Component {
 }
 function mapStateToProps (state) {
   let { user } = state;
-  const { users } = state;
-  const { email } = user;
-  const loginUser = users.filter(user => {
-    return user.email === email
-  })
-  user = loginUser[0];
   return {
     user
   }

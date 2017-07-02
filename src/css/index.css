@@ -5,15 +5,15 @@ body {
   color: #555;
   /*margin: 0px;
   padding: 0px;*/
+  overflow-y: hidden;
 }
 ::-webkit-scrollbar {
 width: 7px;
-height: 15px;
 }
 ::-webkit-scrollbar-track-piece  {
 }
 ::-webkit-scrollbar-thumb:vertical {
-height: 30px;
-background-color: #aaa;
+visibility: hidden;
+background-color: #ddd;
 border-radius: 10px;
 }
