@@ -43,7 +43,7 @@ firebaseApp.auth().onAuthStateChanged(user => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <Router path='/' history={browserHistory}>
+    <Router path='/' history={browserHistory}> 
       <div>
         <Route path='/chatChamp/app' component={App} />
         <Route path='/chatChamp/signin' component={SignIn} />

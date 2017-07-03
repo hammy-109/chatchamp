@@ -9,6 +9,7 @@ class Profile extends Component {
     super(props);
     this.state = {
       showLoader: false,
+      updateApp: false,
     }
   }
   uploadImage = (e) => {
@@ -33,7 +34,7 @@ class Profile extends Component {
       <div>
         <div className='profile-header'>
           {
-            this.props.selectedUser.userName && !this.state.showLoader?
+            this.props.selectedUser.userName && !this.state.showLoader ?
             <div>
               <div>
                 <img

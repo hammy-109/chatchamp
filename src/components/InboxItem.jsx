@@ -31,7 +31,6 @@ class InboxItem extends Component {
     this.setState({ count });
   }
   render() {
-    console.log(this.props);
     const messagesKeys = Object.keys(this.props.inbox.messages);
     const messageObj = this.props.inbox.messages[messagesKeys[messagesKeys.length-1]];
     return (

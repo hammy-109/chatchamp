@@ -11,10 +11,14 @@ class Users extends Component {
       users: [],
       filteredUsers: [],
       isMatchFlag: 0,
+      render: false,
     };
   }
   componentWillReceiveProps (nextProps) {
     this.setState({ users: nextProps.users });
+  }
+  componentDidMount () {
+    this.setState({ users: this.props.users});
   }
   searchUsers = (e) => {
     const findText = e.target.value;
@@ -84,6 +88,7 @@ class Users extends Component {
 }
 function mapStateToProps (state) {
   const { users } = state;
+  console.log(users);
   return { users };
 }
 export default connect(mapStateToProps, null)(Users);

@@ -20,9 +20,10 @@ class App extends Component {
       inbox: undefined,
       user: {},
       dirtyState: false,
+      render: false,
     }
   }
-  componentWillReceiveProps (nextProps, nextState) {
+  componentWillReceiveProps (nextProps) {
     if (nextProps.user.uniqueKey) {
       allInbox.child(nextProps.user.uniqueKey).child('inbox').on('value', snap => {
         let inbox = [];
@@ -40,17 +41,42 @@ class App extends Component {
             return b.time - a.time;
         });
         this.setState({ inbox: inbox.length > 0 ? inbox : [] });
-        if (nextProps.selectedUserObj.userName ===  null ) {
-          if (inbox.length > 0 && !this.state.dirtyState) {
-            this.props.selectedUser(inbox[0].selectedUser);
-          } else {
-            this.props.selectedUser(this.props.user);
-          }
-        }
       });
+      if (nextProps.selectedUserObj.userName === null) {
+        this.props.selectedUser(this.props.user);
+      }
     }
   }
-
+  componentDidMount () {
+    if (this.props.user.uniqueKey) {
+      allInbox.child(this.props.user.uniqueKey).child('inbox').on('value', snap => {
+        let inbox = [];
+        snap.forEach(item => {
+          const messages = item.val().messages;
+          const selectedUser = item.val().selectedUser;
+          const time = item.val().time;
+          inbox.push({
+            messages,
+            selectedUser,
+            time,
+          });
+        });
+        inbox.sort(function(a,b) {
+            return b.time - a.time;
+        });
+        this.setState({ inbox: inbox.length > 0 ? inbox : [] });
+      });
+      if (this.props.selectedUserObj.userName === null) {
+        this.props.selectedUser(this.props.user);
+      }
+    } else {
+      this.setState({ render: true });
+    }
+  }
+  shouldComponentUpdate () {
+    // this.forceUpdate();
+    return true;
+  }
   updateTime = (key) => {
     users.child(key).child('time').set(firebase.database.ServerValue.TIMESTAMP);
   }
@@ -60,8 +86,10 @@ class App extends Component {
   showMyProfile = () => {
   this.props.selectedUser(this.props.user);
   }
-  componentDidMount () {
-    this.setState({ })
+  componentWillMount () {
+    if (!this.state.render) {
+      // this.setState({ inbox : [] });
+    }
   }
   render() {
     return (
@@ -103,6 +131,7 @@ class App extends Component {
 }
 function mapStateToProps(state) {
   const { user, users, selectedUser } = state;
+  console.log('user',user,'users', users,'su', selectedUser );
   const selectedUserObj = selectedUser;
   return { user, users, selectedUserObj };
 }

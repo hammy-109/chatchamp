@@ -2,6 +2,7 @@
   "name": "chatchamp",
   "version": "0.1.0",
   "private": true,
+  "homepage": "https://chatchamp-9d74c.firebaseio.com/",
   "dependencies": {
     "firebase": "^3.9.0",
     "loaders.css": "^0.1.2",

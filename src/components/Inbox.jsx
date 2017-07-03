@@ -17,6 +17,9 @@ class Inbox extends Component {
   componentWillReceiveProps (nextProps) {
     this.setState({ inbox: nextProps.inbox });
   }
+  componentDidMount () {
+    this.forceUpdate();
+  }
   searchInbox = (e) => {
     const findText = e.target.value;
     if (findText !== '') {

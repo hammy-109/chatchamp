@@ -12,9 +12,9 @@ class Messages extends Component {
     this.state = {
       messages: undefined,
       loadAgain: false,
+      render: false,
     }
   }
-
   componentWillReceiveProps (nextProps) {
     if (nextProps.selectedUser.uniqueKey && nextProps.user.uniqueKey) {
       allInbox.child(nextProps.user.uniqueKey)
@@ -34,6 +34,29 @@ class Messages extends Component {
         });
         this.setState({ messages: messages.length > 0 ? messages : '-' });
       });
+    }
+  }
+  componentDidMount () {
+    if (this.props.selectedUser.uniqueKey && this.props.user.uniqueKey) {
+      allInbox.child(this.props.user.uniqueKey)
+      .child('inbox').child(this.props.selectedUser.uniqueKey)
+      .child('messages').on('value', snap => {
+        let messages = [];
+        snap.forEach(item => {
+          const { message, send, time, read } = item.val();
+          const key = item.key;
+          messages.push ({
+            message,
+            send,
+            read,
+            time,
+            key,
+          });
+        });
+        this.setState({ messages: messages.length > 0 ? messages : '-' });
+      });
+    } else {
+      this.setState({ render: true });
     }
   }
   gobottom = () => {

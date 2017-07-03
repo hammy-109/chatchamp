@@ -9,6 +9,5 @@ export default (state = users, action) => {
       return users;
     default:
       return state;
-
   }
 }
